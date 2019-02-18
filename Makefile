@@ -1,18 +1,19 @@
 CROSS_COMPILE ?=
 
-CC      := $(CROSS_COMPILE)gcc
-CFLAGS  ?= -O2 -W -Wall
-LDFLAGS ?=
+CC	:= $(CROSS_COMPILE)gcc
+CFLAGS	?= -O2 -W -Wall
+LDFLAGS	?=
+LIBS	:= -lrt
 
 %.o : %.c
-        $(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 all: rtk_hciattach
 
-rtk_hciattach: hciattach_rtk.o
-        $(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
+rtk_hciattach: rtk_hciattach.o
+	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 clean:
-        -rm -f *.o
-        -rm -f rtk_hciattach
+	-rm -f *.o
+	-rm -f rtk_hciattach
 
