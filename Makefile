@@ -1,11 +1,19 @@
-all:hciattach.c hciattach_rtk.o  
-	cc -o rtk_hciattach hciattach.c hciattach_rtk.o  
+CROSS_COMPILE ?=
 
-hciattach_rtk.o:hciattach_rtk.c
-	cc -c hciattach_rtk.c
+CC      := $(CROSS_COMPILE)gcc
+CFLAGS  ?= -O2 -W -Wall
+LDFLAGS ?=
+LIBS    := -lrt
+
+%.o : %.c
+        $(CC) $(CFLAGS) -c -o $@ $<
+
+all: rtk_hciattach
+
+yavta: hciattach_rtk.o
+        $(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 clean:
-	rm -f *.o  rtk_hciattach
+        -rm -f *.o
+        -rm -f rtk_hciattach
 
-install:
-	cp -p rtk_hciattach /usr/bin/.
