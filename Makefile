@@ -10,10 +10,8 @@ LIBS    := -lrt
 
 all: rtk_hciattach
 
-rtk_hciattach:hciattach.c hciattach_rtk.o
+rtk_hciattach: hciattach.c hciattach_rtk.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
-
-hciattach_rtk.o:hciattach_rtk.c
 
 clean:
 	-rm -f *.o
